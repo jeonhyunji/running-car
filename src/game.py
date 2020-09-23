@@ -1,6 +1,7 @@
 import pygame
 import car
 import math
+from pygame import Vector2
 
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
@@ -117,9 +118,14 @@ class Game:
             # for angle in range(-90, 91, 30):
             #     self.draw_beam(angle, rotatedRect.center)
             beam_angle_arr = [-90, -45, 0, 45, 90]
+            beam_length_arr = []
             for angle in beam_angle_arr:
                 beam_angle = angle - self.car.angle
-                self.draw_beam(beam_angle, rotatedRect.center)
+                beam_length = self.draw_beam(beam_angle, rotatedRect.center)
+                beam_length_arr.append(beam_length)
+            
+            # print beam length arr
+            self.print_beam_length(beam_length_arr)
 
             # check crash, if crash draw yellow rectangular ! and don't move!
             isCrash = self.check_crash(carNewPosition)
@@ -128,10 +134,8 @@ class Game:
                 self.draw_crash(rotatedRect, carNewPosition)
 
             # print car infomation
-            self.print_text("car position: " + str(self.car.position), 10, 10)
-            self.print_text("car new position: " + str(carNewPosition), 10, 40)
-            self.print_text("acceleration: " + str(self.car.acceleration), 10, 70)
-            self.print_text("velocity: " + str(self.car.velocity), 10, 100)
+            self.print_text("acceleration: " + str(self.car.acceleration), 10, 10)
+            self.print_text("velocity: " + str(self.car.velocity), 10, 40)
 
             pygame.display.flip()
             self.clock.tick(self.ticks)
@@ -181,6 +185,25 @@ class Game:
 
             pygame.draw.line(self.screen, BLUE, pos, hit_pos)
             pygame.draw.circle(self.screen, GREEN, hit_pos, 5)
+
+            distance = self.distance(pos, hit_pos)
+            return distance
+        
+    def print_beam_length(self, beam_length_arr):
+        # print beam length arr
+        length_arr_text = "[ "
+        for idx, val in enumerate(beam_length_arr):
+            if (idx == 0):
+                length_arr_text += str(int(val))
+            else:
+                length_arr_text += ", "
+                length_arr_text += str(int(val))
+        length_arr_text += " ]"
+        self.print_text("beam length arr: " + str(length_arr_text), 10, 70)
+
+    def distance(self, pos1, pos2):
+        result = math.sqrt( math.pow(pos1[0] - pos2[0], 2) + math.pow(pos1[1] - pos2[1], 2) )
+        return result
 
     def print_text(self, text, x, y):
         # font loading, text size: 15

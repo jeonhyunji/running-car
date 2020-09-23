@@ -1,4 +1,4 @@
-from pygame.math import Vector2
+from pygame import Vector2
 import math
 
 class Car:
