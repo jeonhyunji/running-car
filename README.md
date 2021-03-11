@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">running-car</h1>
   <p>
-    car를 조종해서 track과의 충돌을 피해 완주해보자
+    track과의 충돌을 피해 완주해보자
   </p>
   </br>
 
@@ -9,7 +9,6 @@
   ![GitHub last commit](https://img.shields.io/github/last-commit/jeonhyunji/running-car)
 </p>
 
-</br></br>
 
 ## Quickstart
 - [Run game in Gitpod](https://gitpod.io/#https://github.com/jeonhyunji/running-car)
