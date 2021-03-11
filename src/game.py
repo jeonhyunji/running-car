@@ -25,13 +25,14 @@ PPU = 32 # pixel per unit
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.display.set_caption("Car tutorial")
+        pygame.display.set_caption("Running Car")
 
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.ticks = 60
         self.exit = False
         self.alive = True
+        self.status = "RUNNING"
 
         # car, track image load
         self.track_image = pygame.image.load(TRACK_IMAGE_PATH)
@@ -61,7 +62,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     print("pygame quit")
                     self.exit = True
-            
+                elif event.type == pygame.KEYDOWN:
+                    pressed = pygame.key.get_pressed()
+                    if pressed[pygame.K_TAB]:
+                        self.__init__()
+
             if (self.alive):
                 # User input
                 pressed = pygame.key.get_pressed()
@@ -132,11 +137,13 @@ class Game:
             isCrash = self.check_crash(carNewPosition)
             if (isCrash):
                 self.alive = False
+                self.status = "CRASH"
                 self.draw_crash(rotatedRect, carNewPosition)
 
             # print car infomation
-            self.print_text("acceleration: " + str(self.car.acceleration), 10, 10)
-            self.print_text("velocity: " + str(self.car.velocity), 10, 40)
+            self.print_text("acceleration: " + str(self.car.acceleration), 10, 10, TEXT_COLOR)
+            self.print_text("velocity: " + str(self.car.velocity), 10, 40, TEXT_COLOR)
+            self.print_text(self.status, 800, 10, YELLOW)
 
             pygame.display.flip()
             self.clock.tick(self.ticks)
@@ -154,7 +161,7 @@ class Game:
             return False
 
     def draw_crash(self, rotatedRect, position):
-        self.print_text("crash!!", position.x, (position.y-20))
+        self.print_text("crash!!", position.x, (position.y-20), TEXT_COLOR)
         pygame.draw.rect(self.screen, YELLOW, rotatedRect, 2)
 
     def draw_beam(self, angle, pos):
@@ -200,16 +207,16 @@ class Game:
                 length_arr_text += ", "
                 length_arr_text += str(int(val))
         length_arr_text += " ]"
-        self.print_text("beam length arr: " + str(length_arr_text), 10, 70)
+        self.print_text("beam length arr: " + str(length_arr_text), 10, 70, TEXT_COLOR)
 
     def distance(self, pos1, pos2):
         result = math.sqrt( math.pow(pos1[0] - pos2[0], 2) + math.pow(pos1[1] - pos2[1], 2) )
         return result
 
-    def print_text(self, text, x, y):
+    def print_text(self, text, x, y, textColor):
         # font loading, text size: 15
         fontObj = pygame.font.Font(FONT_PATH, 15)
-        printTextObj = fontObj.render(text, True, TEXT_COLOR)   
+        printTextObj = fontObj.render(text, True, textColor)   
         printTextRect = printTextObj.get_rect();                     
         printTextRect.topleft = (x, y)                               
         self.screen.blit(printTextObj, printTextRect)    
