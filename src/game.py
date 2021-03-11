@@ -13,8 +13,9 @@ GRAY = (169, 169, 169)
 BACKGROUND_COLOR = GRAY
 TEXT_COLOR = WHITE
 
-IMAGE_PATH = "resources/images/car_green.png"
-TRACK_IMAGE_PATH = "resources/images/track2.png"
+IMAGE_PATH = "../resources/images/car_green.png"
+TRACK_IMAGE_PATH = "../resources/images/track2.png"
+FONT_PATH = "../resources/fonts/NanumSquareOTF_acB.otf"
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 800
@@ -207,7 +208,7 @@ class Game:
 
     def print_text(self, text, x, y):
         # font loading, text size: 15
-        fontObj = pygame.font.Font('resources/fonts/NanumSquareOTF_acB.otf', 15)
+        fontObj = pygame.font.Font(FONT_PATH, 15)
         printTextObj = fontObj.render(text, True, TEXT_COLOR)   
         printTextRect = printTextObj.get_rect();                     
         printTextRect.topleft = (x, y)                               
