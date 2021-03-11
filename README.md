@@ -5,7 +5,7 @@
 </p>
 
 <div align="center">
-    <img src="https://raw.githubusercontent.com/jeonhyunji/running-car/master/resources/images/game.gif?sanitize=true" width="500"/>
+    <img src="https://raw.githubusercontent.com/jeonhyunji/running-car/master/resources/images/game.gif?sanitize=true" width="800"/>
 </div>
 
 
